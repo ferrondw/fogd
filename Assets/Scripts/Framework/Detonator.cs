@@ -1,5 +1,4 @@
 using UnityEngine;
-using Yakanashe.Yautl;
 
 public class Detonator : MonoBehaviour
 {

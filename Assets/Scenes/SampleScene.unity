@@ -271,6 +271,7 @@ MonoBehaviour:
   timeBetweenSpawns: 1.7
   minMaxVerticalSpawnVelocity: {x: 9.5, y: 12.5}
   minMaxHorizontalSpawnVelocity: {x: 1.5, y: 4.5}
+  minMaxRandomRotation: {x: 50, y: 360}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

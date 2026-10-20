@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private new Camera camera;
     [SerializeField] private Vector3 mouseOffset;
     [SerializeField] private float movementSpeed = 10;
+    [SerializeField] private float minSlicingSpeed = 5;
 
     private Collider2D _collider;
     private Rigidbody2D _rigidbody;
@@ -39,9 +40,9 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody.velocity = positionDifference * movementSpeed;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
-        if (!other.TryGetComponent<EnemyBase>(out var enemyBase)) return;
+        if (!other.TryGetComponent<EnemyBase>(out var enemyBase) || _rigidbody.velocity.magnitude < minSlicingSpeed) return;
         
         var absoluteAngle = Vector2.Angle(_rigidbody.velocity, Vector2.up);
         var correctedAngle = _rigidbody.velocity.x > 0 ? absoluteAngle : 360 - absoluteAngle;

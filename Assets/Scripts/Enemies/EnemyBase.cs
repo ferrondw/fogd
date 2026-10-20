@@ -20,12 +20,15 @@ public abstract class EnemyBase : MonoBehaviour
         
         var formerHalf = Instantiate(enemyShard, transform.position, transform.rotation);
         var formerHalfMaterial = formerHalf.GetComponent<SpriteRenderer>()?.material;
+        var formerHalfRigidbody = formerHalf.GetComponent<Rigidbody2D>();
         
         var latterHalf = Instantiate(enemyShard, transform.position, transform.rotation);
         var latterHalfMaterial = latterHalf.GetComponent<SpriteRenderer>()?.material;
+        var latterHalfRigidbody = latterHalf.GetComponent<Rigidbody2D>();
 
-        formerHalf.GetComponent<Rigidbody2D>().velocity = new Vector2(-2, 2);
-        latterHalf.GetComponent<Rigidbody2D>().velocity = new Vector2(2, 2);
+        // will change later to the slicing angle and magnitude + some randomness
+        formerHalfRigidbody.velocity = new Vector2(-2, 2);
+        latterHalfRigidbody.velocity = new Vector2(2, 2);
         
         formerHalfMaterial?.SetFloat(_angle, angle + transform.eulerAngles.z);
         latterHalfMaterial?.SetFloat(_angle, angle + transform.eulerAngles.z + 180);

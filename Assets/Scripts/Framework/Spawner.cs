@@ -9,6 +9,7 @@ public class Spawner : MonoBehaviour
     
     [SerializeField] private Vector2 minMaxVerticalSpawnVelocity;
     [SerializeField] private Vector2 minMaxHorizontalSpawnVelocity;
+    [SerializeField] private Vector2 minMaxRandomRotation;
 
     private float _lastSpawnTime;
 
@@ -34,6 +35,6 @@ public class Spawner : MonoBehaviour
         var spawnPoint = new Vector3(camera.transform.position.x + horizontalSpawnOffset, camera.transform.position.y - camera.orthographicSize);
         enemyInstance.transform.position = spawnPoint;
         enemyRigidbody.velocity = new Vector2(horizontalSpawnVelocity, verticalSpawnVelocity);
-        enemyRigidbody.angularVelocity = Random.Range(50, 360) * (Random.value > 0.5f ? -1 : 1);
+        enemyRigidbody.angularVelocity = Random.Range(minMaxRandomRotation.x, minMaxRandomRotation.y) * (Random.value > 0.5f ? -1 : 1);
     }
 }
