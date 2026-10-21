@@ -5,9 +5,10 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private GameObject visual;
     [SerializeField] private new Camera camera;
+    [SerializeField] private Score score;
     [SerializeField] private Vector3 mouseOffset;
     [SerializeField] private float movementSpeed = 10;
-    [SerializeField] private float minSlicingSpeed = 5;
+    [SerializeField] private float minSlicingSpeed = 1;
 
     private Collider2D _collider;
     private Rigidbody2D _rigidbody;
@@ -48,5 +49,7 @@ public class PlayerMovement : MonoBehaviour
         var correctedAngle = _rigidbody.velocity.x > 0 ? absoluteAngle : 360 - absoluteAngle;
         
         enemyBase?.OnSliced(correctedAngle);
+        // if I use enemyBase?.GivenScore, then private Score.score needs to be nullable too which I don't want
+        if (enemyBase != null) score?.Add(enemyBase.GivenScore);
     }
 }
