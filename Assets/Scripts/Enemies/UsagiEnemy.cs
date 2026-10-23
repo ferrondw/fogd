@@ -2,8 +2,12 @@ public class UsagiEnemy : EnemyBase
 {
     public override void OnSliced(float angle)
     {
-        base.OnSliced(angle);
+        SpawnShards(angle);
         Destroy(gameObject);
-        // add score... other stuff...
+    }
+
+    public override int GetScore()
+    {
+        return 10;
     }
 }

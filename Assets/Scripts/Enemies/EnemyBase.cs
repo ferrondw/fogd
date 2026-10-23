@@ -3,12 +3,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public abstract class EnemyBase : MonoBehaviour
 {
-    public int GivenScore { get; private set; } = 10;
-    
     [SerializeField] private GameObject enemyShard;
-
-    protected new Rigidbody2D rigidbody { get; private set; }
-
+    
+    private new Rigidbody2D rigidbody;
     private readonly int _angle = Shader.PropertyToID("_Angle");
     private readonly Vector2 _randomVelocity = new(-2, 2); // added to both x/y components
     private readonly float _slicingAngleMultiplier = 2.5f;
@@ -18,7 +15,10 @@ public abstract class EnemyBase : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    public virtual void OnSliced(float angle)
+    public abstract void OnSliced(float angle);
+    public abstract int GetScore(); // public field is not serializable in the editor nor accessible in the inheritor
+
+    protected void SpawnShards(float angle)
     {
         var (formerHalf, formerHalfMaterial, formerHalfRigidbody) = InstantiateShard();
         var (latterHalf, latterHalfMaterial, latterHalfRigidbody) = InstantiateShard();
@@ -27,7 +27,10 @@ public abstract class EnemyBase : MonoBehaviour
         var slicingVector = new Vector2(Mathf.Sin(slicingRadians), -Mathf.Cos(slicingRadians)) * _slicingAngleMultiplier;
 
         formerHalfRigidbody.velocity = rigidbody.velocity + RandomVelocity() + slicingVector;
+        formerHalfRigidbody.angularVelocity = rigidbody.angularVelocity;
+        
         latterHalfRigidbody.velocity = rigidbody.velocity + RandomVelocity() + slicingVector;
+        latterHalfRigidbody.angularVelocity = rigidbody.angularVelocity;
 
         // set the shader to the 2 halves
         formerHalfMaterial?.SetFloat(_angle, angle + transform.eulerAngles.z);

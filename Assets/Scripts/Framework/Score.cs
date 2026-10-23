@@ -7,7 +7,7 @@ public class Score : MonoBehaviour
     [SerializeField] private TMP_Text scoreDisplay;
     [SerializeField] private float popoutDuration = 0.4f;
     [SerializeField] private float popoutMultiplier = 1.8f;
-    [SerializeField] private Vector2 randomPopoutRotation = new (-30, 30);
+    [SerializeField] private Vector2 randomPopoutRotation = new (-30f, 30f);
 
     private int score;
 

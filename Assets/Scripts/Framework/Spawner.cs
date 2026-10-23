@@ -3,9 +3,12 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    public bool Paused = true;
+    
     [SerializeField] private new Camera camera;
     [SerializeField] private GameObject[] spawnPrefabs;
     [SerializeField] private float timeBetweenSpawns;
+    [SerializeField] private Vector2Int minxMaxSpawnAmount = new (1, 3);
     
     [SerializeField] private Vector2 minMaxVerticalSpawnVelocity;
     [SerializeField] private Vector2 minMaxHorizontalSpawnVelocity;
@@ -15,9 +18,14 @@ public class Spawner : MonoBehaviour
 
     private void Update()
     {
-        if (!(Time.time - _lastSpawnTime > timeBetweenSpawns)) return;
+        if (!(Time.time - _lastSpawnTime > timeBetweenSpawns) || Paused) return;
 
-        SpawnRandomEnemy();
+        var l = Random.Range(Mathf.Max(minxMaxSpawnAmount.x, 1), Mathf.Max(minxMaxSpawnAmount.y, 1));
+        for (var i = 0; i < l; i++)
+        {
+            SpawnRandomEnemy();
+        }
+        
         _lastSpawnTime = Time.time; // reset timer
     }
 
