@@ -1,9 +1,10 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
-public class PlayerMovement : MonoBehaviour
+public class Player : MonoBehaviour
 {
     [SerializeField] private new Camera camera;
+    [SerializeField] private Menu menu;
     [SerializeField] private Score score;
     [SerializeField] private Vector3 mouseOffset;
     [SerializeField] private float movementSpeed = 10;
@@ -26,6 +27,11 @@ public class PlayerMovement : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.TryGetComponent<EnemyBase>(out var enemyBase)) return;
+
+        if (other.CompareTag("GameOver"))
+        {
+            menu.GameOver();
+        }
         
         var absoluteAngle = Vector2.Angle(_rigidbody.velocity, Vector2.up);
         var correctedAngle = _rigidbody.velocity.x > 0 ? absoluteAngle : 360 - absoluteAngle;
