@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using Yakanashe.Yautl;
 using Yakapedia;
@@ -8,6 +9,9 @@ public class Menu : MonoBehaviour
     [SerializeField] private CanvasGroup menuCanvasGroup;
     [SerializeField] private CanvasGroup gameCanvasGroup;
     [SerializeField] private CanvasGroup gameOverCanvasGroup;
+
+    [SerializeField] private TMP_Text scoreText;
+    [SerializeField] private TMP_Text highscoreText;
     
     public void StartGame()
     {
@@ -20,7 +24,7 @@ public class Menu : MonoBehaviour
         gameCanvasGroup.FadeTo(1, 0.5f);
     }
 
-    public void GameOver()
+    public void GameOver(int score)
     {
         spawner.Paused = true;
         
@@ -28,6 +32,9 @@ public class Menu : MonoBehaviour
         gameOverCanvasGroup.FadeTo(1, 0.5f);
         gameOverCanvasGroup.interactable = true;
         gameOverCanvasGroup.blocksRaycasts = true;
+
+        scoreText.text = $"{score}";
+        highscoreText.text = $"Highscore: {PlayerPrefs.GetInt("highscore")}";
     }
 
     public void ReloadScene()

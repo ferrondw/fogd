@@ -20,8 +20,8 @@ public class Spawner : MonoBehaviour
     {
         if (!(Time.time - _lastSpawnTime > timeBetweenSpawns) || Paused) return;
 
-        var l = Random.Range(Mathf.Max(minxMaxSpawnAmount.x, 1), Mathf.Max(minxMaxSpawnAmount.y, 1));
-        for (var i = 0; i < l; i++)
+        var spawnAmount = Random.Range(Mathf.Max(minxMaxSpawnAmount.x, 1), Mathf.Max(minxMaxSpawnAmount.y, 1));
+        for (var i = 0; i < spawnAmount; i++)
         {
             SpawnRandomEnemy();
         }
@@ -42,7 +42,7 @@ public class Spawner : MonoBehaviour
 
         var spawnPoint = new Vector3(camera.transform.position.x + horizontalSpawnOffset, camera.transform.position.y - camera.orthographicSize);
         enemyInstance.transform.position = spawnPoint;
-        enemyRigidbody.velocity = new Vector2(horizontalSpawnVelocity, verticalSpawnVelocity);
+        enemyRigidbody.linearVelocity = new Vector2(horizontalSpawnVelocity, verticalSpawnVelocity);
         enemyRigidbody.angularVelocity = Random.Range(minMaxRandomRotation.x, minMaxRandomRotation.y) * (Random.value > 0.5f ? -1 : 1);
     }
 }

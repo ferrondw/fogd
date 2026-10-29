@@ -5,7 +5,7 @@ public abstract class EnemyBase : MonoBehaviour
 {
     [SerializeField] private GameObject enemyShard;
     
-    private new Rigidbody2D rigidbody;
+    protected new Rigidbody2D rigidbody;
     private readonly int _angle = Shader.PropertyToID("_Angle");
     private readonly Vector2 _randomVelocity = new(-2, 2); // added to both x/y components
     private readonly float _slicingAngleMultiplier = 2.5f;
@@ -20,16 +20,16 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected void SpawnShards(float angle)
     {
-        var (formerHalf, formerHalfMaterial, formerHalfRigidbody) = InstantiateShard();
-        var (latterHalf, latterHalfMaterial, latterHalfRigidbody) = InstantiateShard();
+        var (_, formerHalfMaterial, formerHalfRigidbody) = InstantiateShard();
+        var (_, latterHalfMaterial, latterHalfRigidbody) = InstantiateShard();
 
         var slicingRadians = Mathf.Deg2Rad * (180 - angle);
         var slicingVector = new Vector2(Mathf.Sin(slicingRadians), -Mathf.Cos(slicingRadians)) * _slicingAngleMultiplier;
 
-        formerHalfRigidbody.velocity = rigidbody.velocity + RandomVelocity() + slicingVector;
+        formerHalfRigidbody.linearVelocity = rigidbody.linearVelocity + RandomVelocity() + slicingVector;
         formerHalfRigidbody.angularVelocity = rigidbody.angularVelocity;
         
-        latterHalfRigidbody.velocity = rigidbody.velocity + RandomVelocity() + slicingVector;
+        latterHalfRigidbody.linearVelocity = rigidbody.linearVelocity + RandomVelocity() + slicingVector;
         latterHalfRigidbody.angularVelocity = rigidbody.angularVelocity;
 
         // set the shader to the 2 halves

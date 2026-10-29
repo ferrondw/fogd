@@ -26,4 +26,9 @@ public class Score : MonoBehaviour
             scoreTransform.RotateTo(Quaternion.identity, popoutDuration, EaseType.InCubic);
         });
     }
+
+    public int Get()
+    {
+        return score;
+    }
 }

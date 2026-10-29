@@ -11,17 +11,26 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D _rigidbody;
 
+    public Vector2 cameraXBounds;
+    public Vector2 cameraYBounds;
+
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
+        cameraXBounds = new Vector2(camera.ViewportToWorldPoint(new Vector3(0, 0, 0)).x,
+            camera.ViewportToWorldPoint(new Vector3(1, 0, 0)).x);
+        cameraYBounds = new Vector2(camera.ViewportToWorldPoint(new Vector3(0, 0, 0)).y,
+            camera.ViewportToWorldPoint(new Vector3(0, 1, 0)).y);
     }
 
     private void Update()
     {
         var offsetMousePosition = camera.ScreenToWorldPoint(Input.mousePosition + mouseOffset);
-        var positionDifference = offsetMousePosition - transform.position;
-        
-        _rigidbody.velocity = positionDifference * movementSpeed;
+        var clampedMousePosition = new Vector3(Mathf.Clamp(offsetMousePosition.x, cameraXBounds.x, cameraXBounds.y),
+            Mathf.Clamp(offsetMousePosition.y, cameraYBounds.x, cameraYBounds.y));
+        var positionDifference = clampedMousePosition - transform.position;
+
+        _rigidbody.linearVelocity = positionDifference * movementSpeed;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -30,13 +39,16 @@ public class Player : MonoBehaviour
 
         if (other.CompareTag("GameOver"))
         {
-            menu.GameOver();
+            if(score.Get() > PlayerPrefs.GetInt("highscore")) PlayerPrefs.SetInt("highscore", score.Get());
+            menu.GameOver(score.Get());
         }
-        
-        var absoluteAngle = Vector2.Angle(_rigidbody.velocity, Vector2.up);
-        var correctedAngle = _rigidbody.velocity.x > 0 ? absoluteAngle : 360 - absoluteAngle;
-        
+
+        var scoreToAdd = enemyBase.GetScore();
+
+        var absoluteAngle = Vector2.Angle(_rigidbody.linearVelocity, Vector2.up);
+        var correctedAngle = _rigidbody.linearVelocity.x > 0 ? absoluteAngle : 360 - absoluteAngle;
+
         enemyBase.OnSliced(correctedAngle);
-        score?.Add(enemyBase.GetScore());
+        if(scoreToAdd != 0) score?.Add(scoreToAdd);
     }
 }

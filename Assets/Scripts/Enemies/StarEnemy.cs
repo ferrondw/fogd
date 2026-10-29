@@ -21,7 +21,7 @@ public class StarEnemy : EnemyBase
             var randomX = Random.Range(randomVelocity.x, randomVelocity.y);
             var randomY = Random.Range(randomVelocity.x, randomVelocity.y);
                 
-            enemyRigidbody.velocity = new Vector2(randomX, randomY);
+            enemyRigidbody.linearVelocity = new Vector2(randomX, randomY);
                 
             enemyRigidbody.angularVelocity = Random.Range(randomAngularVelocity.x, randomAngularVelocity.y);
         }
