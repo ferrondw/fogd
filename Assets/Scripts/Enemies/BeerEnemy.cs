@@ -33,6 +33,7 @@ public class BeerEnemy : EnemyBase
 
     public override void OnSliced(float angle)
     {
+        SpawnShards(angle);
         Destroy(gameObject);
     }
     

@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Menu menu;
     [SerializeField] private Score score;
     [SerializeField] private Vector3 mouseOffset;
+    [SerializeField] private bool hideWithoutTouch = true;
     
     [SerializeField] private UnityEvent onSlice;
 
@@ -16,8 +17,14 @@ public class Player : MonoBehaviour
     private Vector2 _cameraXBounds;
     private Vector2 _cameraYBounds;
 
+    private Collider2D _collider;
+    private SpriteRenderer _visualRenderer;
+
     private void Start()
     {
+        _collider = GetComponent<Collider2D>();
+        _visualRenderer = GetComponentInChildren<SpriteRenderer>();
+        
         _cameraXBounds = new Vector2(camera.ViewportToWorldPoint(new Vector3(0, 0, 0)).x,
             camera.ViewportToWorldPoint(new Vector3(1, 0, 0)).x);
         _cameraYBounds = new Vector2(camera.ViewportToWorldPoint(new Vector3(0, 0, 0)).y,
@@ -29,6 +36,16 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (hideWithoutTouch && Input.touchCount == 0)
+        {
+            _collider.enabled = false;
+            _visualRenderer.enabled = false;
+            return;
+        }
+
+        _collider.enabled = true;
+        _visualRenderer.enabled = true;
+
         var desiredPosition = camera.ScreenToWorldPoint(Input.mousePosition + mouseOffset);
         var clampedPosition = new Vector3(Mathf.Clamp(desiredPosition.x, _cameraXBounds.x, _cameraXBounds.y),
             Mathf.Clamp(desiredPosition.y, _cameraYBounds.x, _cameraYBounds.y));
