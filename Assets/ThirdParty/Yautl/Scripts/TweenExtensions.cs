@@ -55,6 +55,13 @@ namespace Yakanashe.Yautl
             return tween;
         }
         
+        public static ITween ColorTo(this SpriteRenderer renderer, Color to, float duration, EaseType ease = EaseType.InOutSine)
+        {
+            var tween = new Tween<Color>(renderer.transform, () => renderer.color, v => renderer.color = v, to, duration, ease, Color.Lerp);
+            TweenRunner.Instance.Run(tween);
+            return tween;
+        }
+        
         public static ITween ValueTo(this Slider slider, float to, float duration, EaseType ease = EaseType.InOutSine)
         {
             var tween = new Tween<float>(slider.transform, () => slider.value, v => slider.value = v, to, duration, ease, Mathf.Lerp);

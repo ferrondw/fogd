@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using Yakanashe.Yautl;
 using Yakapedia;
 
@@ -12,6 +13,8 @@ public class Menu : MonoBehaviour
 
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text highscoreText;
+    
+    [SerializeField] private UnityEvent onGameOver;
     
     public void StartGame()
     {
@@ -32,6 +35,8 @@ public class Menu : MonoBehaviour
         gameOverCanvasGroup.FadeTo(1, 0.5f);
         gameOverCanvasGroup.interactable = true;
         gameOverCanvasGroup.blocksRaycasts = true;
+        
+        onGameOver.Invoke();
 
         scoreText.text = $"{score}";
         highscoreText.text = $"Highscore: {PlayerPrefs.GetInt("highscore")}";

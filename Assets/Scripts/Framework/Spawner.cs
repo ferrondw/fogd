@@ -7,18 +7,19 @@ public class Spawner : MonoBehaviour
     
     [SerializeField] private new Camera camera;
     [SerializeField] private GameObject[] spawnPrefabs;
-    [SerializeField] private float timeBetweenSpawns;
+    [SerializeField] private AnimationCurve timeBetweenSpawns;
     [SerializeField] private Vector2Int minxMaxSpawnAmount = new (1, 3);
     
     [SerializeField] private Vector2 minMaxVerticalSpawnVelocity;
     [SerializeField] private Vector2 minMaxHorizontalSpawnVelocity;
     [SerializeField] private Vector2 minMaxRandomRotation;
+    [SerializeField] private float verticalSpawnOffset = 1;
 
     private float _lastSpawnTime;
 
     private void Update()
     {
-        if (!(Time.time - _lastSpawnTime > timeBetweenSpawns) || Paused) return;
+        if (!(Time.time - _lastSpawnTime > timeBetweenSpawns.Evaluate(Time.time)) || Paused) return;
 
         var spawnAmount = Random.Range(Mathf.Max(minxMaxSpawnAmount.x, 1), Mathf.Max(minxMaxSpawnAmount.y, 1));
         for (var i = 0; i < spawnAmount; i++)
@@ -40,7 +41,7 @@ public class Spawner : MonoBehaviour
         var horizontalSpawnVelocity = Random.Range(minMaxHorizontalSpawnVelocity.x, minMaxHorizontalSpawnVelocity.y) * (horizontalSpawnOffset > 0 ? -1 : 1);
         var verticalSpawnVelocity = Random.Range(minMaxVerticalSpawnVelocity.x, minMaxVerticalSpawnVelocity.y);
 
-        var spawnPoint = new Vector3(camera.transform.position.x + horizontalSpawnOffset, camera.transform.position.y - camera.orthographicSize);
+        var spawnPoint = new Vector3(camera.transform.position.x + horizontalSpawnOffset, camera.transform.position.y - camera.orthographicSize - verticalSpawnOffset);
         enemyInstance.transform.position = spawnPoint;
         enemyRigidbody.linearVelocity = new Vector2(horizontalSpawnVelocity, verticalSpawnVelocity);
         enemyRigidbody.angularVelocity = Random.Range(minMaxRandomRotation.x, minMaxRandomRotation.y) * (Random.value > 0.5f ? -1 : 1);
