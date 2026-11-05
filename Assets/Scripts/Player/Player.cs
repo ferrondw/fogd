@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class Player : MonoBehaviour
@@ -7,6 +8,8 @@ public class Player : MonoBehaviour
     [SerializeField] private Menu menu;
     [SerializeField] private Score score;
     [SerializeField] private Vector3 mouseOffset;
+    
+    [SerializeField] private UnityEvent onSlice;
 
     private Vector2 _positionLastFrame;
     private float _angle;
@@ -52,6 +55,7 @@ public class Player : MonoBehaviour
 
         print($"Slicing on {correctedAngle}");
         enemyBase.OnSliced(correctedAngle);
+        onSlice.Invoke();
         if (scoreToAdd != 0) score?.Add(scoreToAdd);
     }
 }
