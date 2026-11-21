@@ -315,7 +315,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1280, y: 720}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.338
   m_PhysicalUnit: 1
   m_FallbackScreenDPI: 92.8
   m_DefaultSpriteDPI: 96.8
@@ -540,6 +540,7 @@ MonoBehaviour:
   camera: {fileID: 519420031}
   spawnPrefabs:
   - {fileID: 6151465171480866064, guid: 38448295a8c50b34b8eb9c9c6665afae, type: 3}
+  - {fileID: 2950070177002436045, guid: 478478d1bdfbe8e44b5393f065ff088a, type: 3}
   - {fileID: 201059025922514607, guid: e505eaba125ea9c48a9b3ec89144e5ba, type: 3}
   - {fileID: 5918514948898234200, guid: f7cd96d44172f5b40981b470ffe9a1aa, type: 3}
   - {fileID: 5918514948898234200, guid: f7cd96d44172f5b40981b470ffe9a1aa, type: 3}
@@ -795,7 +796,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.16509432, g: 0.16509432, b: 0.16509432, a: 0}
+  m_BackGroundColor: {r: 0.10849059, g: 0.06796014, b: 0.052198302, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -845,7 +846,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.36, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -986,7 +987,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.9, y: 1.9, z: 1.9}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 255807575}
@@ -2546,6 +2547,10 @@ PrefabInstance:
     - target: {fileID: 2732163078019203067, guid: bcd21e8dba7e42e4695e67cbfe64b484, type: 3}
       propertyPath: movementSpeed
       value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 2732163078019203067, guid: bcd21e8dba7e42e4695e67cbfe64b484, type: 3}
+      propertyPath: hideWithoutTouch
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2732163078019203067, guid: bcd21e8dba7e42e4695e67cbfe64b484, type: 3}
       propertyPath: onSlice.m_PersistentCalls.m_Calls.Array.size
